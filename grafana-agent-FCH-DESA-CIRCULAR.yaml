@@ -1,0 +1,72 @@
+integrations:
+  node_exporter:
+    enabled: true
+    # disable unused collectors
+    disable_collectors:
+      - ipvs #high cardinality on kubelet
+      - btrfs
+      - infiniband
+      - xfs
+      - zfs
+    # exclude dynamic interfaces
+    netclass_ignored_devices: "^(veth.*|cali.*|[a-f0-9]{15})$"
+    netdev_device_exclude: "^(veth.*|cali.*|[a-f0-9]{15})$"
+    # disable tmpfs
+    filesystem_fs_types_exclude: "^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|tmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$"
+    # drop extensive scrape statistics
+    metric_relabel_configs:
+    - action: drop
+      regex: node_scrape_collector_.+
+      source_labels: [__name__]
+    relabel_configs:
+    - replacement: FCH-DESA-CIRCULAR
+      target_label: instance
+  prometheus_remote_write:
+  - basic_auth:
+      password: glc_eyJvIjoiODkyMTU5IiwibiI6InRlc3QxIiwiayI6InBtTlBnMVlnMFI3MDYwNkoxQzZvdzZ1WSIsIm0iOnsiciI6InVzLWF6dXJlIn19
+      username: 1071908
+    url: https://prometheus-us-central2.grafana.net/api/prom/push
+  agent:
+    enabled: true
+    relabel_configs:
+    - action: replace
+      source_labels:
+      - agent_hostname
+      target_label: instance
+    - action: replace
+      target_label: job
+      replacement: "integrations/agent-check"
+    metric_relabel_configs:
+    - action: keep
+      regex: (prometheus_target_.*|prometheus_sd_discovered_targets|agent_build.*|agent_wal_samples_appended_total|process_start_time_seconds)
+      source_labels:
+      - __name__
+  # Add here any snippet that belongs to the `integrations` section.
+  # For a correct indentation, paste snippets copied from Grafana Cloud at the beginning of the line.
+logs:
+  configs:
+  - clients:
+    - basic_auth:
+        password: glc_eyJvIjoiODkyMTU5IiwibiI6InRlc3QxIiwiayI6InBtTlBnMVlnMFI3MDYwNkoxQzZvdzZ1WSIsIm0iOnsiciI6InVzLWF6dXJlIn19
+        username: 636740
+      url: https://logs-prod-us-central2.grafana.net/loki/api/v1/push
+    name: integrations
+    positions:
+      filename: /tmp/positions.yaml
+    scrape_configs:
+      # Add here any snippet that belongs to the `logs.configs.scrape_configs` section.
+      # For a correct indentation, paste snippets copied from Grafana Cloud at the beginning of the line.
+metrics:
+  configs:
+  - name: integrations
+    remote_write:
+    - basic_auth:
+        password: glc_eyJvIjoiODkyMTU5IiwibiI6InRlc3QxIiwiayI6InBtTlBnMVlnMFI3MDYwNkoxQzZvdzZ1WSIsIm0iOnsiciI6InVzLWF6dXJlIn19
+        username: 1071908
+      url: https://prometheus-us-central2.grafana.net/api/prom/push
+    scrape_configs:
+      # Add here any snippet that belongs to the `metrics.configs.scrape_configs` section.
+      # For a correct indentation, paste snippets copied from Grafana Cloud at the beginning of the line.
+  global:
+    scrape_interval: 60s
+  wal_directory: /tmp/grafana-agent-wal
