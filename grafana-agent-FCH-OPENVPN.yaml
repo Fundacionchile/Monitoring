@@ -19,7 +19,7 @@ integrations:
       regex: node_scrape_collector_.+
       source_labels: [__name__]
     relabel_configs:
-    - replacement: CIR_DEV_HRM_FULL
+    - replacement: FCH-OPENVPN
       target_label: instance
   prometheus_remote_write:
   - basic_auth:
