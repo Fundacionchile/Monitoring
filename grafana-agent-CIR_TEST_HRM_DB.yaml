@@ -19,13 +19,13 @@ integrations:
       regex: node_scrape_collector_.+
       source_labels: [__name__]
     relabel_configs:
-    - replacement: CIR_TEST_HRM_CLI
+    - replacement: CIR_TEST_HRM_DB
       target_label: instance
   prometheus_remote_write:
   - basic_auth:
-      password: glc_eyJvIjoiODkyMTU5IiwibiI6InRlc3QxIiwiayI6InBtTlBnMVlnMFI3MDYwNkoxQzZvdzZ1WSIsIm0iOnsiciI6InVzLWF6dXJlIn19
-      username: 1071908
-    url: https://prometheus-us-central2.grafana.net/api/prom/push
+      password: glc_eyJvIjoiOTA5NzA2IiwibiI6ImxpbnVzMyIsImsiOiIxMzBVUFk5NzJWMTcyalBQdFRZUldraTUiLCJtIjp7InIiOiJwcm9kLXNhLWVhc3QtMSJ9fQ==
+      username: 1113958
+    url: https://prometheus-prod-40-prod-sa-east-1.grafana.net/api/prom/push
   agent:
     enabled: true
     relabel_configs:
@@ -37,7 +37,7 @@ integrations:
       target_label: job
       replacement: "integrations/agent-check"
     metric_relabel_configs:
-    - action: keep
+    - action: keep 
       regex: (prometheus_target_.*|prometheus_sd_discovered_targets|agent_build.*|agent_wal_samples_appended_total|process_start_time_seconds)
       source_labels:
       - __name__
@@ -47,9 +47,9 @@ logs:
   configs:
   - clients:
     - basic_auth:
-        password: glc_eyJvIjoiODkyMTU5IiwibiI6InRlc3QxIiwiayI6InBtTlBnMVlnMFI3MDYwNkoxQzZvdzZ1WSIsIm0iOnsiciI6InVzLWF6dXJlIn19
-        username: 636740
-      url: https://logs-prod-us-central2.grafana.net/loki/api/v1/push
+        password: glc_eyJvIjoiOTA5NzA2IiwibiI6ImxpbnVzMyIsImsiOiIxMzBVUFk5NzJWMTcyalBQdFRZUldraTUiLCJtIjp7InIiOiJwcm9kLXNhLWVhc3QtMSJ9fQ==
+        username: 656080
+      url: https://logs-prod-024.grafana.net/loki/api/v1/push
     name: integrations
     positions:
       filename: /tmp/positions.yaml
@@ -61,9 +61,9 @@ metrics:
   - name: integrations
     remote_write:
     - basic_auth:
-        password: glc_eyJvIjoiODkyMTU5IiwibiI6InRlc3QxIiwiayI6InBtTlBnMVlnMFI3MDYwNkoxQzZvdzZ1WSIsIm0iOnsiciI6InVzLWF6dXJlIn19
-        username: 1071908
-      url: https://prometheus-us-central2.grafana.net/api/prom/push
+        password: glc_eyJvIjoiOTA5NzA2IiwibiI6ImxpbnVzMyIsImsiOiIxMzBVUFk5NzJWMTcyalBQdFRZUldraTUiLCJtIjp7InIiOiJwcm9kLXNhLWVhc3QtMSJ9fQ==
+        username: 1113958
+      url: https://prometheus-prod-40-prod-sa-east-1.grafana.net/api/prom/push
     scrape_configs:
       # Add here any snippet that belongs to the `metrics.configs.scrape_configs` section.
       # For a correct indentation, paste snippets copied from Grafana Cloud at the beginning of the line.
