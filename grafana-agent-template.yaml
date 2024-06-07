@@ -15,7 +15,7 @@ integrations:
     filesystem_fs_types_exclude: "^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|tmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$"
     # drop extensive scrape statistics
     relabel_configs:
-    - replacement: 'PRE-BASTION'
+    - replacement: 'INSTANCE'
       target_label: instance
     metric_relabel_configs:
     - action: drop
